@@ -75,11 +75,14 @@ try:
     supportedStyles = [os.path.splitext(file)[0] for file in bibEnv.list_templates('html')]
     bibEnv.filters['ordinal'] = ordinal
     bibEnv.filters['author_join'] = author_join
+    bibEnv.filters['highlight_JNW'] = highlight_JNW
 
     for entry in db:
         if entry['ENTRYTYPE'] in supportedStyles:
             bibTemplate = bibEnv.get_template(entry['ENTRYTYPE'] + '.html')
             entry['formatted'] = bibTemplate.render(entry)
+        else:
+            print("Warning:", entry['ENTRYTYPE'], "not supported.")
 
     # Read in css file or leave blank if it does not exist
     cssPath = os.path.join(args.style, 'bib.css')

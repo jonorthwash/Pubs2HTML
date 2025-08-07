@@ -1,0 +1,128 @@
+.publication { 
+	margin-bottom: 1.2em;
+	/* text-align: justify ; */
+}
+
+.pubsection h3 {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	margin-left: -5em ;
+}
+
+/* .publication h5 { */
+.pubsubsection h5 {
+	clear: left ;
+	/** display: inline ; **/
+	float: left;
+	text-align: left ;
+	width: 5em ;
+	max-width: 5em ;
+	margin-left: -5em ;
+	margin-top: 0em;
+	font-size: 12pt ;
+	position: sticky;
+	top: 2em;
+	z-index: 10;
+}
+
+.publication-journal {
+	/* color: #777 ; */
+	margin-bottom: 0em !important ;
+	overflow: hidden;
+	margin-left: 48px;
+}
+
+.publication-title {
+	/* padding-left: 30pt !important ;
+	text-indent: -30pt !important ; */
+
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: bold ;
+	font-size: 13pt;
+	/* font-family: "DejaVu Serif" ; */
+	/* font-family: "Trebuchet MS" ; */
+}
+
+.publication div {
+	margin-bottom: 0.7ex;
+}
+
+.publication-links {
+	font-size: 11pt !important;
+	font-weight: normal !important ;
+	/* margin-left: 30pt; ; */
+	margin-left: 48px;
+}
+
+.pub-author-me {
+	/* border: 1px solid black ; */
+   /* color: black;
+	-webkit-text-fill-color: white; */ /* Will override color (regardless of order) */
+	/* -webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: black; */
+	/* font-weight: bold; */
+	/* font-style: italic ; */
+	/* text-shadow: 0px 0px 4px #00ffff; */
+	/* text-shadow: 1px 1px #00ffff; */
+	/* background-color: #eea ; */
+	/* background-color: yellow ; */
+	/* border: 1px solid #aaa ; */
+	/* color: purple ;
+	font-weight: bold; */
+	/* color: #090 ; */
+	color: #000 ;
+}
+
+.publication-authors {
+	color: #777 ;
+	margin-left: 48px;
+}
+
+.pubsection {
+	margin-left: 6em ;
+	padding-right: 3em ;
+	display: block ;
+}
+
+.pubtypeiconbox img {
+	/* width: 1.5em; */
+	/* height: 2em ; */
+	vertical-align: bottom ;
+	width: 2.5em ;
+	margin-right: 0.5em ;
+	margin-bottom: 0.5em ;
+}
+
+.pubtypeicon {
+	width: 2.5em ;
+	margin-right: 0.5em ;
+}
+
+.publication-journal .pubtypeiconbox {
+	/*float: left;*/
+	/* height: 3em ; */
+	vertical-align: top;
+	display: inline-block;
+	white-space: nowrap;
+	float: left ;
+}
+
+.pubvenue {
+}
+
+.resprogicon {
+	/* width: 1.5em; */
+	height: 2em ;
+	vertical-align: bottom ;
+	width: 2em ;
+}
+
+.publication-icon {
+	float: left;
+}
+
+.icon-resprog, .icon-pubtype {
+	width: 2.5em;
+}
+

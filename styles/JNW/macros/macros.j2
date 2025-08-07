@@ -1,0 +1,35 @@
+{% macro publinks(pubstate, abstract, url, doi, pdf, slides) -%}
+	<div class="publication-links">
+		{% set ns = namespace(first = true) %}
+		{% if pubstate is defined %}
+			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
+         {{ pubstate }}
+      {% endif %}
+		{% if abstract is defined %}
+			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
+         <a href="#" class="activateAbstract">Abstract</a>
+      {% endif %}
+		{% if url is defined %}
+			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
+			<a href="{{ url }}">URL</a>
+		{% endif %}  
+		{% if doi is defined %}
+			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
+			<a href="https://doi.org/{{ doi }}">DOI</a>
+		{% endif %}
+		{% if pdf is defined %}
+			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
+			<a href="{{ pdf }}">PDF</a>
+		{% endif %}
+		{% if slides is defined %}
+			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
+			<a href="{{ slides }}">slides</a>
+		{% endif %}  
+		{% if not ns.first %}]{% endif %}
+	</div>
+	{% if abstract is defined -%}
+		<div class="abstract" style="display: none">{{ abstract }}</div>
+	{%- endif -%}
+
+{%- endmacro %}
+

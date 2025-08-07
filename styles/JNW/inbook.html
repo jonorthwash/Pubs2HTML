@@ -1,0 +1,17 @@
+{% import 'macros/macros.j2' as macros %}
+<div class="publication">
+	<div class="publication-title">{{ title }}</div>
+	<div class="publication-authors">{{ author|highlight_JNW|author_join }}</div>
+	<div class="publication-journal">{{ booktitle }}
+		{%- if volume is defined -%}
+			, <span class="{{ ENTRYTYPE }} volume">{{ volume }}</span>
+			{%- if issue is defined -%}
+				(<span class="{{ ENTRYTYPE }} number">{{ number }}</span>)
+			{%- endif -%}
+		{%- endif -%}
+		{%- if pages is defined -%}
+			, <span class="{{ ENTRYTYPE }} pages">{{ pages }}</span>
+		{%- endif -%}
+	</div>
+	{{ macros.publinks(pubstate, abstract, url, doi, pdf, slides) }}
+</div>

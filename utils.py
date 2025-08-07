@@ -31,8 +31,12 @@ def ordinal(value):
 
 def keeponly(value, val, field='ENTRYTYPE'):
     """ Filter by BibTeX field """
-    return [entry for entry in value
-            if field in list(entry.keys()) and entry[field] == str(val)]
+    if isinstance(val, str):
+        return [entry for entry in value
+                if field in list(entry.keys()) and entry[field] == str(val)]
+    elif isinstance(val, list):
+        return [entry for entry in value
+                if field in list(entry.keys()) and entry[field] in val]
 
 
 def author_join(value, d=', ', last=', and ', two=' and '):
@@ -43,6 +47,16 @@ def author_join(value, d=', ', last=', and ', two=' and '):
         return value[0] + two + value[1]
     else:
         return d.join(value[:-1]) + last + value[-1]
+
+def highlight_JNW(value):
+    output = []
+    for name in value:
+        if "Jonathan" in name and "Washington" in name:
+            outname = "<span class=\"pub-author-me\">" + name + "</span>"
+        else:
+            outname = name
+        output.append(outname)
+    return output
 
 
 # ##############################
