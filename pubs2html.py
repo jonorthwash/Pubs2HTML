@@ -1,5 +1,5 @@
-#! /usr/bin/python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
+
 import os
 import argparse
 from copy import deepcopy
@@ -8,10 +8,10 @@ import bibtexparser
 from bibtexparser.bparser import BibTexParser
 from jinja2 import Environment, FileSystemLoader
 
-from auxfun import *
+from utils import *
 
 
-PATH = os.getcwdu()
+PATH = os.getcwd()
 
 # Create command line arguments parser
 parser = argparse.ArgumentParser()
@@ -90,9 +90,9 @@ try:
     else:
         css = ''
 
-except:
-    print ('An error occured while processing the style files.'
-           'The program will exit without completing the task.')
+except Exception as e:
+    print ('An error occured while processing the style files.',
+           'The program will exit without completing the task.', e)
 
 else:
     try:
@@ -103,7 +103,7 @@ else:
 
         # Write to output file
         outputFile = open(args.output, 'w')
-        outputFile.write(outputTemplate.render(db=db, css=css).encode('utf8'))
+        outputFile.write(outputTemplate.render(db=db, css=css))
         outputFile.close()
 
     except IOError:

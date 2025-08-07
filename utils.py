@@ -32,10 +32,10 @@ def ordinal(value):
 def keeponly(value, val, field='ENTRYTYPE'):
     """ Filter by BibTeX field """
     return [entry for entry in value
-            if field in entry.keys() and entry[field] == str(val)]
+            if field in list(entry.keys()) and entry[field] == str(val)]
 
 
-def author_join(value, d=u', ', last=u', and ', two=u' and '):
+def author_join(value, d=', ', last=', and ', two=' and '):
     """ Like join but for list of names (convenient authors list) """
     if len(value) == 1:
         return value[0]
@@ -61,7 +61,7 @@ def customizations(entry):
 
 def clear_empty(entry):
     """ Clear empty fields in entry """
-    gen = (field for field in entry.keys() if not entry[field])
+    gen = (field for field in list(entry.keys()) if not entry[field])
 
     for field in gen:
         del entry[field]
@@ -94,7 +94,7 @@ def clean_latex(entry, fields=['title']):
     bold = r'\\textbf\{([^\}]*)\}'
     markup = r'\\[^\{]*\{([^\}]*)\}'
 
-    for field in entry.keys():
+    for field in list(entry.keys()):
         val = entry[field]
 
         try:
