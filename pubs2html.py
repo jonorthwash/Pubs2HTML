@@ -79,7 +79,10 @@ try:
 
     for entry in db:
         if entry['ENTRYTYPE'] in supportedStyles:
-            bibTemplate = bibEnv.get_template(entry['ENTRYTYPE'] + '.html')
+            # JNW: easier to make a general template type for my purposes
+            #   can switch back to this system
+            #bibTemplate = bibEnv.get_template(entry['ENTRYTYPE'] + '.html')
+            bibTemplate = bibEnv.get_template('general.html')
             entry['formatted'] = bibTemplate.render(entry)
         else:
             print("Warning:", entry['ENTRYTYPE'], "not supported.")

@@ -28,7 +28,26 @@
 		<h3>Peer-reviewed articles</h3>
 		{% set ns = namespace(last_year = 9999) %}
 		{# {% for year in range(1999, 2025)|reverse %} #}
-				{% for entry in db|keeponly(['peerreviewed', 'proceedings'], field='pubtype')|sort(attribute='year'|reverse)|sort(attribute='month'|reverse) %}
+				{% for entry in db|keeponly(['peerreviewed', 'proceedings'], field='pubtype')|sort(reverse=true, attribute='year') %}
+					{% if entry.year != ns.last_year %}
+						{% if not loop.first %}</div>{% endif %}
+						<div class="pubsubsection">
+						<h5>{{ entry.year }}</h5>
+						{% set ns.last_year = entry.year %}
+						{{ entry.formatted }}
+					{% else %}
+						{{ entry.formatted }}
+					{% endif %}
+					{% if loop.last %}</div>{% endif %}
+				{% endfor %}
+		{# {% endfor %} #}
+	</div>
+
+	<div class="pubsection">
+		<h3>Conference presentations</h3>
+		{% set ns = namespace(last_year = 9999) %}
+		{# {% for year in range(1999, 2025)|reverse %} #}
+				{% for entry in db|keeponly('presentation', field='pubtype')|sort(reverse=true, attribute='year') %}
 					{% if entry.year != ns.last_year %}
 						{% if not loop.first %}</div>{% endif %}
 						<div class="pubsubsection">
