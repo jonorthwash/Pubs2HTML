@@ -1,4 +1,4 @@
-{% macro publinks(pubstate, abstract, url, doi, pdf, slides) -%}
+{% macro publinks(bibTex, pubstate, abstract, url, doi, pdf, slides) -%}
 	<div class="publication-links">
 		{% set ns = namespace(first = true) %}
 		{% if pubstate is defined %}
@@ -27,6 +27,7 @@
 		{% endif %}  
 		{% if not ns.first %}]{% endif %}
 	</div>
+	<div class="bibTex" style="display: none">{{ bibTex }}</div>
 	{% if abstract is defined -%}
 		<div class="abstract" style="display: none">{{ abstract }}</div>
 	{%- endif -%}

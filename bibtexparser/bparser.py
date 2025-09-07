@@ -172,6 +172,15 @@ class BibTexParser(object):
         logger.debug('Set the list of entries')
         self.bib_database.entries = records
 
+    def _recreate_bibTex(self, d):
+        blocked_keys = ["ENTRYTYPE", "ID", "abstract", "programme", "pubtype", "nopubstate", "notitle", "nojournal", "nopublisher", "noeventtitle", "noauthor", "notyetjournal", "noyear", "noauthor2", "noprogramme", "nonote", "noissuetitle", "noaddress", "nourl", "nojournalsubtitle", "noeventdate", "nomonth", "nolocation", "nopdf", "nodate", "nopages", "nodoi", "oldurl", "otherurl", "noaddendum", "noisbn", "noeditor", "volumeno", "editorlrec", "publisherlrec", "isbnlrec", "novenue", "noinclude", "maybenotinclude"]
+        output = "@" + d['ENTRYTYPE'] + "{" + d['ID'] + ",\n"
+        for key, value in d.items():
+            if "+" not in key and key not in blocked_keys:
+                output += "   " + key + " = \"" + value + "\",\n"
+        output += "}"
+        return output
+
     def _parse_record(self, record, customization=None):
         """Parse a record.
 
@@ -300,6 +309,8 @@ class BibTexParser(object):
 
         d['ENTRYTYPE'] = bibtype
         d['ID'] = id
+        d['bibTex'] = self._recreate_bibTex(d)
+        #print(d['bibTex'])
 
         if customization is None:
             logger.debug('No customization to apply, return dict')

@@ -50,12 +50,16 @@ def author_join(value, d=', ', last=', and ', two=' and '):
 
 def highlight_JNW(value):
     output = []
-    for name in value:
-        if "Jonathan" in name and "Washington" in name:
-            outname = "<span class=\"pub-author-me\">" + name + "</span>"
-        else:
-            outname = name
-        output.append(outname)
+    if len(value)>1:
+        for name in value:
+            if "Jonathan" in name and "Washington" in name:
+                outname = "<span class=\"pub-author-me\">" + name + "</span>"
+            else:
+                outname = name
+            output.append(outname)
+    else:
+        output.append("")
+    #print(output)
     return output
 
 
@@ -109,16 +113,17 @@ def clean_latex(entry, fields=['title']):
     markup = r'\\[^\{]*\{([^\}]*)\}'
 
     for field in list(entry.keys()):
-        val = entry[field]
+        if field != "bibTex":
+            val = entry[field]
 
-        try:
-            val = re.sub(italic, '<i>\g<1></i>', val)
-            val = re.sub(emph, '<i>\g<1></i>', val)
-            val = re.sub(bold, '<b>\g<1></b>', val)
-            val = re.sub(markup, '\g<1>', val)
-            val = re.sub('[\{\}]', '', val)
-            entry[field] = val
-        except:
-            pass
+            try:
+                val = re.sub(italic, '<i>\g<1></i>', val)
+                val = re.sub(emph, '<i>\g<1></i>', val)
+                val = re.sub(bold, '<b>\g<1></b>', val)
+                val = re.sub(markup, '\g<1>', val)
+                val = re.sub('[\{\}]', '', val)
+                entry[field] = val
+            except:
+                pass
 
     return entry
