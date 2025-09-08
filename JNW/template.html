@@ -62,44 +62,126 @@
 		{# {% endfor %} #}
 	</div>
 
-<h2>CONFERENCE PRESENTATIONS</h2>
+	<div class="pubsection">
+		<h3>Books</h3>
+	</div>
+
+	<div class="pubsection">
+		<h3>Theses</h3>
+		{% set ns = namespace(last_year = 9999) %}
+		{# {% for year in range(1999, 2025)|reverse %} #}
+				{% for entry in db|keeponly('thesis', field='pubtype')|sort(reverse=true, attribute='year') %}
+					{% if entry.year != ns.last_year %}
+						{% if not loop.first %}</div>{% endif %}
+						<div class="pubsubsection">
+						<h5>{{ entry.year }}</h5>
+						{% set ns.last_year = entry.year %}
+						{{ entry.formatted }}
+					{% else %}
+						{{ entry.formatted }}
+					{% endif %}
+					{% if loop.last %}</div>{% endif %}
+				{% endfor %}
+		{# {% endfor %} #}
+	</div>
+
+	<div class="pubsection">
+		<h3>Roundtable and invited talks</h3>
+		{% set ns = namespace(last_year = 9999) %}
+		{# {% for year in range(1999, 2025)|reverse %} #}
+				{% for entry in db|keeponly('invited', field='pubtype')|sort(reverse=true, attribute='year') %}
+					{% if entry.year != ns.last_year %}
+						{% if not loop.first %}</div>{% endif %}
+						<div class="pubsubsection">
+						<h5>{{ entry.year }}</h5>
+						{% set ns.last_year = entry.year %}
+						{{ entry.formatted }}
+					{% else %}
+						{{ entry.formatted }}
+					{% endif %}
+					{% if loop.last %}</div>{% endif %}
+				{% endfor %}
+		{# {% endfor %} #}
+	</div>
+
+	<div class="pubsection">
+		<h3>Digital Scholarship</h3>
+		{% set ns = namespace(last_year = 9999) %}
+		{# {% for year in range(1999, 2025)|reverse %} #}
+				{% for entry in db|keeponly('digital scholarship', field='pubtype')|sort(reverse=true, attribute='year') %}
+					{% if entry.year != ns.last_year %}
+						{% if not loop.first %}</div>{% endif %}
+						<div class="pubsubsection">
+						<h5>{{ entry.year }}</h5>
+						{% set ns.last_year = entry.year %}
+						{{ entry.formatted }}
+					{% else %}
+						{{ entry.formatted }}
+					{% endif %}
+					{% if loop.last %}</div>{% endif %}
+				{% endfor %}
+		{# {% endfor %} #}
+	</div>
+
+	<div class="pubsection">
+		<h3>Other published contributions (invited)</h3>
+		{% set ns = namespace(last_year = 9999) %}
+		{# {% for year in range(1999, 2025)|reverse %} #}
+				{% for entry in db|keeponly('other', field='pubtype')|sort(reverse=true, attribute='year') %}
+					{% if entry.year != ns.last_year %}
+						{% if not loop.first %}</div>{% endif %}
+						<div class="pubsubsection">
+						<h5>{{ entry.year }}</h5>
+						{% set ns.last_year = entry.year %}
+						{{ entry.formatted }}
+					{% else %}
+						{{ entry.formatted }}
+					{% endif %}
+					{% if loop.last %}</div>{% endif %}
+				{% endfor %}
+		{# {% endfor %} #}
+	</div>
+
+
+<!-- h2>CONFERENCE PRESENTATIONS</h2>
 
   <ul id="pubs_list">
 
-  {% for entry in db|keeponly('presentation', field='pubtype')|sort(attribute='year')|reverse|sort(attribute='author') %}
+  {# {% for entry in db|keeponly('presentation', field='pubtype')|sort(attribute='year')|reverse|sort(attribute='author') %}
     {{ entry.formatted }}
-  {%- endfor %}
+  {%- endfor %} #}
 
-  </ul>
+  </ul -->
 
 
 <!-- h2>TECHNICAL REPORTS</h2>
 
   <ul id="pubs_list">
 
-  {% for entry in db|keeponly('techreport')|sort(attribute='author')|sort(attribute='year') %}
+  {# {% for entry in db|keeponly('techreport')|sort(attribute='author')|sort(attribute='year') %}
     {{ entry.formatted }}
-  {%- endfor %}
+  {%- endfor %} #}
 
   </ul -->
 
 
-<h1>BY YEAR</h1>
+<!-- h1>BY YEAR</h1>
 
-{% for year in range(1999, 2025)|reverse %}
-{% if db|keeponly(year, field='year') %}
-<h2>{{ year }}</h2>
+{#{% for year in range(1999, 2025)|reverse %}
+{% if db|keeponly(year, field='year') %}#}
+<h2>{#{{ year }}#}</h2>
 
   <ul id="pubs_list">
 
-    {% for entry in db|keeponly(year, field='year')|sort(attribute='author') %}
+{#    {% for entry in db|keeponly(year, field='year')|sort(attribute='author') %}
       {{ entry.formatted }}
-    {%- endfor %}
+	 {%- endfor %} #}
 
   </ul>
-{% endif %}
-{% endfor %}
+{# {% endif %}
+{% endfor %} #}
 
+-->
 
 <h1>BY PROGRAMME</h1>
 

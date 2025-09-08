@@ -90,8 +90,9 @@ def clear_empty(entry):
 def author(entry):
     """ Convert author field to list """
     if 'author' in entry:
-        entry['author'] = [name for name in entry['author'].replace('\n', ' ').split(' and ')
+        entry['author'] = [name for name in entry['author'].replace('\n', ' ').replace('{', '').replace('}', '').split(' and ')
                            if name.strip()]
+    #print(entry['author'])
 
     return entry
 
@@ -99,17 +100,18 @@ def author(entry):
 def page_endash(entry):
     """ Separate pages by an HTML endash (&ndash;) """
     if "pages" in entry:
-        p = re.findall('\d+', entry["pages"])
+        p = re.findall(r'\d+', entry["pages"])
         entry["pages"] = p[0] + '&ndash;' + p[-1]
     return entry
 
 
-def clean_latex(entry, fields=['title']):
+def clean_latex(entry, fields=['title', 'note']):
     """ Cleans up LaTeX markup from entries """
     # LaTeX markup regex
     italic = r'\\textit\{([^\}]*)\}'
     emph = r'\\emph\{([^\}]*)\}'
     bold = r'\\textbf\{([^\}]*)\}'
+    hyperlink = r'\\url\{([^\}]*)\}'
     markup = r'\\[^\{]*\{([^\}]*)\}'
 
     for field in list(entry.keys()):
@@ -117,11 +119,12 @@ def clean_latex(entry, fields=['title']):
             val = entry[field]
 
             try:
-                val = re.sub(italic, '<i>\g<1></i>', val)
-                val = re.sub(emph, '<i>\g<1></i>', val)
-                val = re.sub(bold, '<b>\g<1></b>', val)
-                val = re.sub(markup, '\g<1>', val)
-                val = re.sub('[\{\}]', '', val)
+                val = re.sub(italic, r'<i>\g<1></i>', val)
+                val = re.sub(emph, r'<i>\g<1></i>', val)
+                val = re.sub(bold, r'<b>\g<1></b>', val)
+                val = re.sub(hyperlink, r'<a href="\g<1>">\g<1></a>', val)
+                val = re.sub(markup, r'\g<1>', val)
+                val = re.sub(r'[\{\}]', '', val)
                 entry[field] = val
             except:
                 pass

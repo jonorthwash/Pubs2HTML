@@ -1,25 +1,29 @@
 {% macro publinks(bibTex, pubstate, abstract, url, doi, pdf, slides) -%}
 	<div class="publication-links">
 		{% set ns = namespace(first = true) %}
+		{% if bibTex is defined -%}	
+			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
+			<a href="#" class="activateBibtex">BibTex</a>
+		{% endif %}
 		{% if pubstate is defined %}
 			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
          {{ pubstate }}
       {% endif %}
 		{% if abstract is defined %}
 			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
-         <a href="#" class="activateAbstract">Abstract</a>
+         <a href="#" class="activateAbstract">abstract</a>
       {% endif %}
 		{% if url is defined %}
 			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
-			<a href="{{ url }}">URL</a>
+			<b><a href="{{ url }}">URL</a></b>
 		{% endif %}  
 		{% if doi is defined %}
 			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
-			<a href="https://doi.org/{{ doi }}">DOI</a>
+			<b><a href="https://doi.org/{{ doi }}">DOI</a></b>
 		{% endif %}
 		{% if pdf is defined %}
 			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
-			<a href="{{ pdf }}">PDF</a>
+			<b><a href="{{ pdf }}">PDF</a></b>
 		{% endif %}
 		{% if slides is defined %}
 			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
@@ -27,7 +31,9 @@
 		{% endif %}  
 		{% if not ns.first %}]{% endif %}
 	</div>
-	<div class="bibTex" style="display: none">{{ bibTex }}</div>
+	{% if bibTex is defined -%}
+		<div class="bibTex" style="display: none">{{ bibTex }}</div>
+	{%- endif -%}
 	{% if abstract is defined -%}
 		<div class="abstract" style="display: none">{{ abstract }}</div>
 	{%- endif -%}

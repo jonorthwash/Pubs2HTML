@@ -227,7 +227,7 @@ class BibTexParser(object):
             # treat the case for which the last line of the record
             # does not have a coma
             if record.endswith('}\n}') or record.endswith('}}'):
-                logger.debug('Missing coma in the last line of the record. Fix it.')
+                logger.debug('Missing comma in the last line of the record. Fix it.')
                 record = re.sub('}(\n|)}$', '},\n}', record)
 
         # if a string record, put it in the replace_dict

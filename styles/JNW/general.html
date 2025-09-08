@@ -1,20 +1,26 @@
 {% import 'macros/macros.j2' as macros %}
+{% set nsg = namespace(first = true) %}
 <div class="publication">
-	<div class="publication-title">{{ title }}</div>
-	<div class="publication-authors">{{ author|highlight_JNW|author_join }}</div>
+	<div class="publication-title"><img style="height: 1em;" src="./assets/{{pubtype}}.svg" alt="{{pubtype}}"/>&nbsp;{{ title }}</div>
+	{%- if author|length > 1 -%}
+	<div class="publication-authors"><img style="height: 1em;" src="./assets/author.svg"/>&nbsp;{{ author|highlight_JNW|author_join }}</div>
+	{%- endif -%}
 	{%- if journal is defined -%}
-	<div class="publication-journal">{{ journal }}
+	{%set nsg.first=false%}
+	<div class="publication-journal"><img style="height: 1em;" src="./assets/journal.svg"/>{{ journal }}
 	{%- elif booktitle is defined -%}
-	<div class="publication-journal">{{ booktitle }}
+	{%set nsg.first=false%}
+	<div class="publication-journal"><img style="height: 1em;" src="./assets/journal.svg"/>{{ booktitle }}
 	{%- elif eventtitle is defined -%}
-	<div class="publication-journal">{{ eventtitle }}
+	{%set nsg.first=false%}
+	<div class="publication-journal"><img style="height: 1em;" src="./assets/venue.svg"/>{{ eventtitle }}
 	{%- else -%}
 	<div class="publication-journal">
 	{%- endif -%}
 		{%- if volume is defined -%}
-			, <span class="{{ ENTRYTYPE }} volume">{{ volume }}</span>
+			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} volume">{{ volume }}</span>
 		{%- elif location is defined -%}
-			, <span class="{{ ENTRYTYPE }} volume">{{ location }}</span>
+			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} volume">{{ location }}</span>
 		{%- endif -%}
 		{%- if number is defined -%}
 			(<span class="{{ ENTRYTYPE }} number">{{ number }}</span>)
@@ -26,10 +32,10 @@
 			(<span class="{{ ENTRYTYPE }} chapter">Ch. {{ chapter }}</span>)
 		{%- endif -%}
 		{%- if pages is defined -%}
-			, <span class="{{ ENTRYTYPE }} pages">{{ pages }}</span>
+			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} pages">{{ pages }}</span>
 		{%- endif -%}
 		{%- if note is defined -%}
-			, <span class="{{ ENTRYTYPE }} notes">{{ note }}</span>
+			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} notes">{{ note }}</span>
 		{%- endif -%}
 	</div>
 	{{ macros.publinks(bibTex, pubstate, abstract, link, doi, pdf, slides) }}
