@@ -13,7 +13,10 @@
 			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
          <a href="#" class="activateAbstract">abstract</a>
       {% endif %}
-		{% if url is defined %}
+		{% if mainurl is defined %}
+			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
+			<b><a href="{{ mainurl }}">URL</a></b>
+		{% elif url is defined %}
 			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
 			<b><a href="{{ url }}">URL</a></b>
 		{% endif %}  

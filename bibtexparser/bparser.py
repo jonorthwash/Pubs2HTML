@@ -173,7 +173,7 @@ class BibTexParser(object):
         self.bib_database.entries = records
 
     def _recreate_bibTex(self, d):
-        blocked_keys = ["ENTRYTYPE", "ID", "abstract", "programme", "pubtype", "nopubstate", "notitle", "nojournal", "nopublisher", "noeventtitle", "noauthor", "notyetjournal", "noyear", "noauthor2", "noprogramme", "nonote", "noissuetitle", "noaddress", "nourl", "nojournalsubtitle", "noeventdate", "nomonth", "nolocation", "nopdf", "nodate", "nopages", "nodoi", "oldurl", "otherurl", "noaddendum", "noisbn", "noeditor", "volumeno", "editorlrec", "publisherlrec", "isbnlrec", "novenue", "noinclude", "maybenotinclude"]
+        blocked_keys = ["ENTRYTYPE", "ID", "abstract", "programme", "pubtype", "nopubstate", "notitle", "nojournal", "nopublisher", "noeventtitle", "noauthor", "notyetjournal", "noyear", "noauthor2", "noprogramme", "nonote", "noissuetitle", "noaddress", "nourl", "nojournalsubtitle", "noeventdate", "nomonth", "nolocation", "nopdf", "nodate", "nopages", "nodoi", "oldurl", "otherurl", "noaddendum", "noisbn", "noeditor", "volumeno", "editorlrec", "publisherlrec", "isbnlrec", "novenue", "noinclude", "maybenotinclude", "oldjournal", "oldpages", "oldaddress", "oldurl", "oldpdf"]
         output = "@" + d['ENTRYTYPE'] + "{" + d['ID'] + ",\n"
         for key, value in d.items():
             if "+" not in key and key not in blocked_keys:
