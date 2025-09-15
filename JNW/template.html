@@ -1,14 +1,27 @@
 <?php
-        $where = "research";
-        include("header.php");
+	
+	$where = "research";
+	$headextra = "	<script type=\"text/javascript\">
+		function toggleBibTex(el){
+			par = el.closest(\".publication\")
+			bibTex = par.querySelector(\".bibTex\")
+			bibTex.style.display = (bibTex.style.display == 'block') ? 'none' : 'block';
+		}
+		function toggleAbstract(el){
+			par = el.closest(\".publication\")
+			abstract = par.querySelector(\".abstract\")
+			abstract.style.display = (abstract.style.display == 'block') ? 'none' : 'block';
+		}
+		function toggleKonspekt(el){
+			par = el.closest(\".publication\")
+			konspekt = par.querySelector(\".konspekt\")
+			konspekt.style.display = (konspekt.style.display == 'block') ? 'none' : 'block';
+		}
+
+	</script>";
+
+	include("header.php");
 ?>
-
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
 
 <title>Publications</title>
 

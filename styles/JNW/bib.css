@@ -1,6 +1,20 @@
 .publication { 
 	margin-bottom: 1.2em;
 	/* text-align: justify ; */
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: row;
+	align-items: stretch;
+}
+
+.pubimgcol {
+	padding-top: 0.5ex;
+	width: 1.75em;
+	text-align: center;
+	flex-shrink: 0;
+}
+
+.pubtitlecol {
 }
 
 .pubsection h3 {
@@ -30,7 +44,12 @@
 	/* color: #777 ; */
 	margin-bottom: 0em !important ;
 	overflow: hidden;
-	margin-left: 48px;
+	/* margin-left: 2em; */
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: row;
+	align-items: stretch;
+
 }
 
 .publication-title {
@@ -52,7 +71,7 @@
 	font-size: 11pt !important;
 	font-weight: normal !important ;
 	/* margin-left: 30pt; ; */
-	margin-left: 48px;
+	/* margin-left: 2em; */
 }
 
 .pub-author-me {
@@ -76,7 +95,11 @@
 
 .publication-authors {
 	color: #777 ;
-	margin-left: 48px;
+	/* margin-left: 2em; */
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: row;
+	align-items: stretch;
 }
 
 .pubsection {

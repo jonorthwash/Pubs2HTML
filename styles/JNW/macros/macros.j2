@@ -1,9 +1,9 @@
-{% macro publinks(bibTex, pubstate, abstract, url, doi, pdf, slides) -%}
+{% macro publinks(bibTex, pubstate, abstract, konspekt, url, doi, pdf, slides) -%}
 	<div class="publication-links">
 		{% set ns = namespace(first = true) %}
 		{% if bibTex is defined -%}	
 			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
-			<a href="#" class="activateBibtex">BibTex</a>
+			<a href="javascript:;" class="activateBibtex" onclick="toggleBibTex(this);">BibTex</a>
 		{% endif %}
 		{% if pubstate is defined %}
 			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
@@ -11,7 +11,11 @@
       {% endif %}
 		{% if abstract is defined %}
 			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
-         <a href="#" class="activateAbstract">abstract</a>
+         <a href="javascript:;" class="activateAbstract" onclick="toggleAbstract(this);">abstract</a>
+      {% endif %}
+		{% if konspekt is defined %}
+			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
+         <a href="javascript:;" class="activateKonspekt" onclick="toggleKonspekt(this);">конспект</a>
       {% endif %}
 		{% if mainurl is defined %}
 			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
@@ -39,6 +43,9 @@
 	{%- endif -%}
 	{% if abstract is defined -%}
 		<div class="abstract" style="display: none">{{ abstract }}</div>
+	{%- endif -%}
+	{% if konspekt is defined -%}
+		<div class="konspekt" style="display: none">{{ konspekt }}</div>
 	{%- endif -%}
 
 {%- endmacro %}

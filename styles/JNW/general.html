@@ -1,22 +1,38 @@
 {% import 'macros/macros.j2' as macros %}
 {% set nsg = namespace(first = true) %}
 <div class="publication">
-	<div class="publication-title"><img style="height: 1em;" src="./assets/{{pubtype}}.svg" alt="{{pubtype}}"/>&nbsp;{{ title }}</div>
-	{%- if author|length > 1 -%}
-	<div class="publication-authors"><img style="height: 1em;" src="./assets/author.svg"/>&nbsp;{{ author|highlight_JNW|author_join }}</div>
-	{%- endif -%}
-	{%- if journal is defined -%}
-	{%set nsg.first=false%}
-	<div class="publication-journal"><img style="height: 1em;" src="./assets/journal.svg"/>{{ journal }}
-	{%- elif booktitle is defined -%}
-	{%set nsg.first=false%}
-	<div class="publication-journal"><img style="height: 1em;" src="./assets/journal.svg"/>{{ booktitle }}
-	{%- elif eventtitle is defined -%}
-	{%set nsg.first=false%}
-	<div class="publication-journal"><img style="height: 1em;" src="./assets/venue.svg"/>{{ eventtitle }}
-	{%- else -%}
-	<div class="publication-journal">
-	{%- endif -%}
+	<div class="pubimgcol">
+		<img style="height: 1em;" src="./assets/{{pubtype}}.svg" alt="{{pubtype}}"/>
+	</div>
+	<div class="pubtitlecol">
+		<div class="publication-title">{{ title }}</div>
+		{%- if author|length > 1 -%}
+			<div class="publication-authors">
+				<div class="pubimgcol"><img style="height: 1em;" src="./assets/author.svg"/></div>
+				<div>{{ author|highlight_JNW|author_join }}</div>
+			</div>
+		{%- endif -%}
+		{%- if journal is defined -%}
+		{%set nsg.first=false%}
+			<div class="publication-journal">
+				<div class="pubimgcol"><img style="height: 1em;" src="./assets/journal.svg"/></div>
+				<div>
+					{{ journal }}
+		{%- elif booktitle is defined -%}
+		{%set nsg.first=false%}
+			<div class="publication-journal">
+				<div class="pubimgcol"><img style="height: 1em;" src="./assets/journal.svg"/></div>
+				<div>
+					{{ booktitle }}
+		{%- elif eventtitle is defined -%}
+		{%set nsg.first=false%}
+			<div class="publication-journal">
+				<div class="pubimgcol"><img style="height: 1em;" src="./assets/venue.svg"/></div>
+				<div>
+					{{ eventtitle }}
+		{%- else -%}
+			<div class="publication-journal">
+		{%- endif -%}
 		{%- if volume is defined -%}
 			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} volume">{{ volume }}</span>
 		{%- elif location is defined -%}
@@ -28,7 +44,7 @@
 		{%- if issue is defined -%}
 			(<span class="{{ ENTRYTYPE }} issue">{{ issue }}</span>)
 		{%- endif -%}
-		{%- if chapter is defined -%}
+		{%- if chapter is defined %}
 			(<span class="{{ ENTRYTYPE }} chapter">Ch. {{ chapter }}</span>)
 		{%- endif -%}
 		{%- if pages is defined -%}
@@ -37,6 +53,7 @@
 		{%- if note is defined -%}
 			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} notes">{{ note }}</span>
 		{%- endif -%}
+		</div></div>
+		{{ macros.publinks(bibTex, pubstate, abstract, konspekt, link, doi, pdf, slides) }}
 	</div>
-	{{ macros.publinks(bibTex, pubstate, abstract, link, doi, pdf, slides) }}
 </div>
