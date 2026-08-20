@@ -17,6 +17,9 @@ PATH = os.getcwd()
 parser = argparse.ArgumentParser()
 
 # Command line arguments
+parser.add_argument('-f', '--filter',
+                    default=None,
+                    help='Path to comma/newline-separated list of pubs to include. Default: None (=include all pubs)')
 parser.add_argument('-t', '--template',
                     default=os.path.join(PATH, 'template.html'),
                     help='Path of templates folder. Default: ./template.html')
@@ -33,6 +36,9 @@ parser.add_argument('files', nargs='+', help='Path to BibTeX file(s) to convert'
 # Parse command line arguments
 args = parser.parse_args()
 
+if args.filter:
+    if not os.path.isfile(args.filter):
+        raise Exception('Filter argument [' + args.filter + '] must be a file.')
 
 if not os.path.isdir(args.style):
     raise Exception('Style argument [' + args.style + '] must be a folder.')
@@ -44,6 +50,11 @@ if not os.path.isfile(args.template):
 # Start BibTeX files parsing
 # Create empty database
 db = []
+
+if args.filter:
+    # Load and parse the filter file
+    filterFile = open(args.filter, 'r')
+    filterDb = re.split(r'[,\n\r ]', filterFile.read())
 
 # Parse each file and merge databases
 for filePath in args.files:
@@ -60,13 +71,17 @@ for filePath in args.files:
 
         # Check if entry title isn't duplicated then add entry to database
         for entryTemp in dbTemp:
-            if not any(entryTemp['title'].lower() == entry['title'].lower() for entry in db):
-                db.append(deepcopy(entryTemp))
+            if not any(entryTemp['ID'].lower() == entry['ID'].lower() for entry in db):
+
+                if args.filter and entryTemp['ID'] in filterDb:
+                    db.append(deepcopy(entryTemp))
+                else:
+                    print("Info: skipping", entryTemp['ID'], ": not in filter file.")
+
 
     except IOError:
         print ('An error occured while processing [' +
                filePath + ']. Its content will be ignored.')
-
 
 # Format entries according to selected style and write to file
 try:
@@ -76,6 +91,7 @@ try:
     bibEnv.filters['ordinal'] = ordinal
     bibEnv.filters['author_join'] = author_join
     bibEnv.filters['highlight_JNW'] = highlight_JNW
+    bibEnv.filters['fix_dashes_JNW'] = fix_dashes_JNW
 
     for entry in db:
         if entry['ENTRYTYPE'] in supportedStyles:
@@ -105,6 +121,7 @@ else:
         # Setup Jinja environment for output template
         outputEnv = Environment(loader=FileSystemLoader(os.path.dirname(args.template)))
         outputEnv.filters['keeponly'] = keeponly
+        outputEnv.filters['fix_dashes_JNW'] = fix_dashes_JNW
         outputTemplate = outputEnv.get_template(os.path.basename(args.template))
 
         # Write to output file

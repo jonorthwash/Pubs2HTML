@@ -62,6 +62,10 @@ def highlight_JNW(value):
     #print(output)
     return output
 
+def fix_dashes_JNW(value):
+    output = value.replace("--", "–")
+    return output
+
 
 # ##############################
 # BIBTEX PARSER CUSTOMIZATIONS #
@@ -111,6 +115,7 @@ def clean_latex(entry, fields=['title', 'note']):
     italic = r'\\textit\{([^\}]*)\}'
     emph = r'\\emph\{([^\}]*)\}'
     bold = r'\\textbf\{([^\}]*)\}'
+    hyperref = r'\\href\{([^\}]*)\}\{([^\}]*)\}'
     hyperlink = r'\\url\{([^\}]*)\}'
     markup = r'\\[^\{]*\{([^\}]*)\}'
 
@@ -122,6 +127,7 @@ def clean_latex(entry, fields=['title', 'note']):
                 val = re.sub(italic, r'<i>\g<1></i>', val)
                 val = re.sub(emph, r'<i>\g<1></i>', val)
                 val = re.sub(bold, r'<b>\g<1></b>', val)
+                val = re.sub(hyperref, r'<a href="\g<1>">\g<2></a>', val)
                 val = re.sub(hyperlink, r'<a href="\g<1>">\g<1></a>', val)
                 val = re.sub(markup, r'\g<1>', val)
                 val = re.sub(r'[\{\}]', '', val)

@@ -8,10 +8,14 @@
 }
 
 .pubimgcol {
-	padding-top: 0.5ex;
-	width: 1.75em;
+	padding-top: 0.15ex;
+	width: 20pt;
 	text-align: center;
 	flex-shrink: 0;
+}
+
+.publication > .pubimgcol {
+	padding-top: 0.5ex !important;
 }
 
 .pubtitlecol {
@@ -20,8 +24,12 @@
 .pubsection h3 {
 	position: sticky;
 	top: 0;
-	z-index: 10;
+	bottom: 0;
+	z-index: 20;
 	margin-left: -5em ;
+	background-color: rgba(255, 255, 255, 0.8);
+	padding-bottom: 2pt;
+	border-bottom: 1px solid black;
 }
 
 /* .publication h5 { */
@@ -58,20 +66,21 @@
 
 	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: bold ;
-	font-size: 13pt;
+	font-size: 12pt;
 	/* font-family: "DejaVu Serif" ; */
 	/* font-family: "Trebuchet MS" ; */
 }
 
 .publication div {
-	margin-bottom: 0.7ex;
+	margin-bottom: 0.5ex;
 }
 
 .publication-links {
-	font-size: 11pt !important;
+	font-size: 12pt !important;
 	font-weight: normal !important ;
 	/* margin-left: 30pt; ; */
 	/* margin-left: 2em; */
+	margin-top: 0.5ex;
 }
 
 .pub-author-me {
@@ -100,6 +109,7 @@
 	flex-wrap: nowrap;
 	flex-direction: row;
 	align-items: stretch;
+	font-size: 11pt;
 }
 
 .pubsection {
@@ -129,6 +139,16 @@
 	display: inline-block;
 	white-space: nowrap;
 	float: left ;
+	font-size: 11pt;
+}
+
+.notes {
+	/* font-size: 10pt; */
+	font-style: italic;
+}
+
+.eventtitle, .journal, .booktitle {
+	font-size: 11pt;
 }
 
 .pubvenue {
@@ -149,3 +169,71 @@
 	width: 2.5em;
 }
 
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.tab-btn.active {
+  font-weight: bold;
+  background-color: #ddd;
+}
+
+/* Container for the entire tab system */
+.tab-container {
+  width: 100%;
+  font-family: sans-serif;
+}
+
+/* Row wrapper for the buttons */
+.tab-buttons {
+  display: flex;
+  /* Creates the continuous bottom line under the tabs */
+  border-bottom: 2px solid black; 
+  gap: 5px;
+  padding-left: 0.75em;
+}
+
+/* Reset and style the base buttons */
+.tab-btn {
+  /* Reset defaults */
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  
+  /* Sizing and typography */
+  padding-right: 0.6em;
+  padding-left: 0.6em;
+  font-size: 14pt;
+  color: blue;
+  background-color: #e9e9e9 ;
+  
+  /* Tab appearance */
+  border: 2px solid black ;
+  /* transition: all 0.2s ease; */
+  
+  /* Fixes spacing alignment over the container border */
+  margin-bottom: -2px; 
+}
+
+/* Hover state for inactive tabs */
+.tab-btn:hover {
+  border-bottom: 2px solid #e9e9e9;
+}
+
+/* The active/selected tab state */
+.tab-btn.active {
+  background-color: #fff;
+  color: blue;
+  border-color: black;
+  border-bottom-color: #fff; /* Masks the line below to integrate with content */
+  font-weight: bold;
+}
+
+html {
+  scroll-behavior: smooth;
+}

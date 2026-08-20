@@ -18,6 +18,32 @@
 			konspekt.style.display = (konspekt.style.display == 'block') ? 'none' : 'block';
 		}
 
+function openTab(evt, tabId) {
+  const contents = document.querySelectorAll('.tab-content');
+  contents.forEach(content => content.classList.remove('active'));
+
+  const buttons = document.querySelectorAll('.tab-btn');
+  buttons.forEach(btn => btn.classList.remove('active'));
+
+  document.getElementById(tabId).classList.add('active');
+  evt.currentTarget.classList.add('active');
+}
+
+// Automatically open the correct tab if a hash exists in the URL
+window.addEventListener(\"DOMContentLoaded\", () => {
+  const hash = window.location.hash;
+  if (hash) {
+    // 1. Find the tab button or input associated with this hash id
+    const targetTab = document.querySelector(`[data-target=\"\${hash}\"]`) || document.querySelector(hash);
+    
+    // 2. Trigger a click event to open it programmatically
+    if (targetTab) {
+      targetTab.click(); 
+      // 3. Scroll the page smoothly to the opened tab
+      targetTab.scrollIntoView({ behavior: \"smooth\" });
+    }
+  }
+});
 	</script>";
 
 	include("header.php");
@@ -31,7 +57,7 @@
 
 <body>
 
-<h1>BY TYPE</h1>
+<!-- h1>BY TYPE</h1 -->
 
 <!-- h2>BOOKS</h2>
 
@@ -42,9 +68,25 @@
   {%- endfor %} #}
 
   </ul -->
+ 
+  <div class="tab-buttons">
+    <button class="tab-btn active" onclick="openTab(event, 'content-bytype')">By type</button>
+    <button class="tab-btn" onclick="openTab(event, 'content-byprogramme')">By programme</button>
+  </div>
+
+  <div id="content-bytype" class="tab-content active">
+	<ul>
+		<li><a href="#peerreviewed">Peer-reviewed articles</a></li>
+		<li><a href="#presentations">Conference presentations</a></li>
+		<li><a href="#books">Books</a></li>
+		<li><a href="#theses">Theses</a></li>
+		<li><a href="#roundtables">Roundtable and invited talks</a></li>
+		<li><a href="#digital-scholarship">Digital Scholarship</a></li>
+		<li><a href="#other-pubs">Other published contributions (invited, honorary, etc.)</a></li>
+	</ul>
 
 	<div class="pubsection">
-		<h3>Peer-reviewed articles</h3>
+		<h3 id="peerreviewed">Peer-reviewed articles</h3>
 		{% set ns = namespace(last_year = 9999) %}
 		{# {% for year in range(1999, 2025)|reverse %} #}
 				{% for entry in db|keeponly(['peerreviewed', 'proceedings'], field='pubtype')|sort(reverse=true, attribute='year') %}
@@ -63,7 +105,7 @@
 	</div>
 
 	<div class="pubsection">
-		<h3>Conference presentations</h3>
+		<h3 id="presentations">Conference presentations</h3>
 		{% set ns = namespace(last_year = 9999) %}
 		{# {% for year in range(1999, 2025)|reverse %} #}
 				{% for entry in db|keeponly('presentation', field='pubtype')|sort(reverse=true, attribute='year') %}
@@ -82,11 +124,24 @@
 	</div>
 
 	<div class="pubsection">
-		<h3>Books</h3>
+		<h3 id="books">Books</h3>
+		{% set ns = namespace(last_year = 9999) %}
+				{% for entry in db|keeponly('book', field='pubtype')|sort(reverse=true, attribute='year') %}
+					{% if entry.year != ns.last_year %}
+						{% if not loop.first %}</div>{% endif %}
+						<div class="pubsubsection">
+						<h5>{{ entry.year }}</h5>
+						{% set ns.last_year = entry.year %}
+						{{ entry.formatted }}
+					{% else %}
+						{{ entry.formatted }}
+					{% endif %}
+					{% if loop.last %}</div>{% endif %}
+				{% endfor %}
 	</div>
 
 	<div class="pubsection">
-		<h3>Theses</h3>
+		<h3 id="theses">Theses</h3>
 		{% set ns = namespace(last_year = 9999) %}
 		{# {% for year in range(1999, 2025)|reverse %} #}
 				{% for entry in db|keeponly('thesis', field='pubtype')|sort(reverse=true, attribute='year') %}
@@ -105,7 +160,7 @@
 	</div>
 
 	<div class="pubsection">
-		<h3>Roundtable and invited talks</h3>
+		<h3 id="roundtables">Roundtable and invited talks</h3>
 		{% set ns = namespace(last_year = 9999) %}
 		{# {% for year in range(1999, 2025)|reverse %} #}
 				{% for entry in db|keeponly('invited', field='pubtype')|sort(reverse=true, attribute='year') %}
@@ -124,14 +179,14 @@
 	</div>
 
 	<div class="pubsection">
-		<h3>Digital Scholarship</h3>
+		<h3 id="digital-scholarship">Digital Scholarship</h3>
 		{% set ns = namespace(last_year = 9999) %}
 		{# {% for year in range(1999, 2025)|reverse %} #}
 				{% for entry in db|keeponly('digital scholarship', field='pubtype')|sort(reverse=true, attribute='year') %}
 					{% if entry.year != ns.last_year %}
 						{% if not loop.first %}</div>{% endif %}
 						<div class="pubsubsection">
-						<h5>{{ entry.year }}</h5>
+						<h5>{{ entry.year|fix_dashes_JNW }}</h5>
 						{% set ns.last_year = entry.year %}
 						{{ entry.formatted }}
 					{% else %}
@@ -143,14 +198,14 @@
 	</div>
 
 	<div class="pubsection">
-		<h3>Other published contributions (invited)</h3>
+		<h3 id="other-pubs">Other published contributions (invited, honorary, etc.)</h3>
 		{% set ns = namespace(last_year = 9999) %}
 		{# {% for year in range(1999, 2025)|reverse %} #}
 				{% for entry in db|keeponly('other', field='pubtype')|sort(reverse=true, attribute='year') %}
 					{% if entry.year != ns.last_year %}
 						{% if not loop.first %}</div>{% endif %}
 						<div class="pubsubsection">
-						<h5>{{ entry.year }}</h5>
+						<h5>{{ entry.year|fix_dashes_JNW }}</h5>
 						{% set ns.last_year = entry.year %}
 						{{ entry.formatted }}
 					{% else %}
@@ -160,6 +215,7 @@
 				{% endfor %}
 		{# {% endfor %} #}
 	</div>
+  </div>
 
 
 <!-- h2>CONFERENCE PRESENTATIONS</h2>
@@ -202,9 +258,10 @@
 
 -->
 
-<h1>BY PROGRAMME</h1>
+<!-- h1>BY PROGRAMME</h1 -->
 
-{% for programme, full_programme in [
+{%
+set programme_list = [
 	('langtech', 'Language technology'),
 	('computational', 'Computational linguistics'),
 	('sociohistorical', 'Socio-historical linguisics'),
@@ -213,18 +270,44 @@
 	('documentation', 'Language Documentation')
 	]
 %}
+
+  <div id="content-byprogramme" class="tab-content">
+
+	<ul>
+{% for programme, full_programme in programme_list %}
+		<li><a href="#{{programme}}">{{full_programme}}</a></li>
+{% endfor %}
+	</ul>
+
+{% for programme, full_programme in programme_list %}
 {% if db|keeponly(programme, field='programme') %}
-<h2>{{ full_programme }}</h2>
+	<div class="pubsection">
+		<h3 id="{{programme}}">{{ full_programme }}</h3>
+		{% set ns = namespace(last_year = 9999) %}
+		{# {% for year in range(1999, 2025)|reverse %} #}
+				{% for entry in db|keeponly(programme, field='programme')|sort(reverse=true, attribute='year') %}
+					{% if entry.year != ns.last_year %}
+						{% if not loop.first %}</div>{% endif %}
+						<div class="pubsubsection">
+						<h5>{{ entry.year|fix_dashes_JNW }}</h5>
+						{% set ns.last_year = entry.year %}
+						{{ entry.formatted }}
+					{% else %}
+						{{ entry.formatted }}
+					{% endif %}
+					{% if loop.last %}</div>{% endif %}
+				{% endfor %}
+		{# {% endfor %} #}
+	</div>
 
-  <ul id="pubs_list">
+    {#% for entry in db|keeponly(programme, field='programme')|sort(attribute='year')|reverse %#} {# |sort(attribute='author') #}
+      {#{ entry.formatted }}
+    {%- endfor %#}
 
-    {% for entry in db|keeponly(programme, field='programme')|sort(attribute='year')|reverse %} {# |sort(attribute='author') #}
-      {{ entry.formatted }}
-    {%- endfor %}
-
-  </ul>
 {% endif %}
 {% endfor %}
+
+  </div>
 
 
 
@@ -235,9 +318,10 @@
         <p>"<a href="https://thenounproject.com/term/peer-reviewed/783177">Peer Reviewed</a>" icon by John Salzarulo from <a href="http://thenounproject.com/">the Noun Project</a>.</p>
         <p>"<a href="https://thenounproject.com/term/college-graduation/1456302">College Graduation</a>" icon by Misha from <a href="http://thenounproject.com/">the Noun Project</a>.</p>
         <p>"<a href="https://thenounproject.com/term/presentation/14838/">College Graduation</a>" icon by Louie Greco from <a href="http://thenounproject.com/">the Noun Project</a>.</p>
+		  <p>"<a href="https://thenounproject.com/icon/book-4074781/">Book</a>" icon by Ahmad Taufik from <a href="http://thenounproject.com/">the Noun Project</a> (CC BY 3.0).</p>
 
 <!-- FOOTER -->
-Generated automatically by <a href="https://github.com/lchamon/pubs2html">pubs2html</a> [ &copy; 2014 Luiz Chamon ].
+Generated automatically by <a href="https://github.com/jonorthwash/Pubs2HTML">pubs2html</a> [ &copy; 2014 Luiz Chamon ].
 <!-- END OF FOOTER -->
 
 </div>

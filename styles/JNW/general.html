@@ -2,10 +2,10 @@
 {% set nsg = namespace(first = true) %}
 <div class="publication">
 	<div class="pubimgcol">
-		<img style="height: 1em;" src="./assets/{{pubtype}}.svg" alt="{{pubtype}}"/>
+		<img style="height: 1em;" src="./assets/{{pubtype}}.svg" alt="{{pubtype}}" title="{{pubtype}}"/>
 	</div>
 	<div class="pubtitlecol">
-		<div class="publication-title">{{ title }}</div>
+		<div class="publication-title">{{ title|fix_dashes_JNW }}</div>
 		{%- if author|length > 1 -%}
 			<div class="publication-authors">
 				<div class="pubimgcol"><img style="height: 1em;" src="./assets/author.svg"/></div>
@@ -16,27 +16,30 @@
 		{%set nsg.first=false%}
 			<div class="publication-journal">
 				<div class="pubimgcol"><img style="height: 1em;" src="./assets/journal.svg"/></div>
-				<div>
+				<div class="journal">
 					{{ journal }}
 		{%- elif booktitle is defined -%}
 		{%set nsg.first=false%}
 			<div class="publication-journal">
 				<div class="pubimgcol"><img style="height: 1em;" src="./assets/journal.svg"/></div>
-				<div>
+				<div class="booktitle">
 					{{ booktitle }}
-		{%- elif eventtitle is defined -%}
+		{%- elif eventtitle is defined or venue is defined -%}
 		{%set nsg.first=false%}
 			<div class="publication-journal">
 				<div class="pubimgcol"><img style="height: 1em;" src="./assets/venue.svg"/></div>
-				<div>
+				<div class="eventtitle">
 					{{ eventtitle }}
 		{%- else -%}
 			<div class="publication-journal">
+				<div>
 		{%- endif -%}
 		{%- if volume is defined -%}
 			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} volume">{{ volume }}</span>
 		{%- elif location is defined -%}
 			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} volume">{{ location }}</span>
+		{%- elif venue is defined -%}
+			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} volume">{{ venue }}</span>
 		{%- endif -%}
 		{%- if number is defined -%}
 			(<span class="{{ ENTRYTYPE }} number">{{ number }}</span>)
@@ -51,7 +54,10 @@
 			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} pages">{{ pages }}</span>
 		{%- endif -%}
 		{%- if note is defined -%}
-			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} notes">{{ note }}</span>
+			{% if not nsg.first %}.{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} notes">{{ note }}</span>
+		{%- endif -%}
+		{% if ENTRYTYPE == "mastersthesis" or ENTRYTYPE == "phdthesis" -%}
+			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} thesistype">{{ type }}</span>
 		{%- endif -%}
 		</div></div>
 		{{ macros.publinks(bibTex, pubstate, abstract, konspekt, link, doi, pdf, slides) }}
