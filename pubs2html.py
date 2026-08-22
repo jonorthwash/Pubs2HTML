@@ -10,6 +10,8 @@ from jinja2 import Environment, FileSystemLoader
 
 from utils import *
 
+from datetime import datetime
+
 
 PATH = os.getcwd()
 
@@ -112,6 +114,9 @@ try:
     else:
         css = ''
 
+    today = datetime.now()
+    date_updated = today.strftime("%Y-%m-%d")
+
 except Exception as e:
     print ('An error occured while processing the style files.',
            'The program will exit without completing the task.', e)
@@ -126,7 +131,7 @@ else:
 
         # Write to output file
         outputFile = open(args.output, 'w')
-        outputFile.write(outputTemplate.render(db=db, css=css))
+        outputFile.write(outputTemplate.render(db=db, css=css, date_updated=date_updated))
         outputFile.close()
 
     except IOError:
