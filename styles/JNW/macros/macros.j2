@@ -1,4 +1,4 @@
-{% macro publinks(bibTex, pubstate, abstract, konspekt, url, doi, pdf, slides) -%}
+{% macro publinks(bibTex, pubstate, abstract, konspekt, proof, mainurl, url, doi, pdf, slides) -%}
 	<div class="publication-links">
 		{% set ns = namespace(first = true) %}
 		{% if bibTex is defined -%}	
@@ -17,6 +17,10 @@
 			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
          <a href="javascript:;" class="activateKonspekt" onclick="toggleKonspekt(this);">конспект</a>
       {% endif %}
+		{% if proof is defined %}
+			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
+			<b><a href="{{ proof }}">proof</a></b>
+		{% endif %}
 		{% if mainurl is defined %}
 			{% if not ns.first %}|{% else %}[{%set ns.first=false%}{% endif %}
 			<b><a href="{{ mainurl }}">URL</a></b>
