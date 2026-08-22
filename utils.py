@@ -118,6 +118,8 @@ def clean_latex(entry, fields=['title', 'note']):
     hyperref = r'\\href\{([^\}]*)\}\{([^\}]*)\}'
     hyperlink = r'\\url\{([^\}]*)\}'
     markup = r'\\[^\{]*\{([^\}]*)\}'
+    markup2 = r'\{\\[^\{ ]* ([^\}]*)\}'
+    markup3 = r'\\[^\{ ]*'
 
     for field in list(entry.keys()):
         if field != "bibTex":
@@ -130,6 +132,8 @@ def clean_latex(entry, fields=['title', 'note']):
                 val = re.sub(hyperref, r'<a href="\g<1>">\g<2></a>', val)
                 val = re.sub(hyperlink, r'<a href="\g<1>">\g<1></a>', val)
                 val = re.sub(markup, r'\g<1>', val)
+                val = re.sub(markup2, r'\g<1>', val)
+                val = re.sub(markup3, '', val)
                 val = re.sub(r'[\{\}]', '', val)
                 entry[field] = val
             except:

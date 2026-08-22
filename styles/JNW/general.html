@@ -41,8 +41,10 @@
 			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} volume">{{ volume }}</span>
 		{%- elif location is defined -%}
 			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} volume">{{ location }}</span>
+		{%- elif address is defined -%}
+			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ entrytype }} volume">{{ address }}</span>
 		{%- elif venue is defined -%}
-			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} volume">{{ venue }}</span>
+			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ entrytype }} volume">{{ venue }}</span>
 		{%- endif -%}
 		{%- if number is defined -%}
 			(<span class="{{ ENTRYTYPE }} number">{{ number }}</span>)
@@ -63,6 +65,6 @@
 			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} thesistype">{{ type }}</span>
 		{%- endif -%}
 		</div></div>
-		{{ macros.publinks(bibTex, pubstate, abstract, konspekt, proof, mainurl, link, doi, pdf, slides) }}
+		{{ macros.publinks(bibTex, pubstate, abstract, konspekt, proof, mainurl, link, doi, pdf, slides, poster) }}
 	</div>
 </div>
