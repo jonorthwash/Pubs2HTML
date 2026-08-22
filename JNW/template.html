@@ -62,17 +62,17 @@ window.addEventListener(\"DOMContentLoaded\", () => {
 
   <div id="content-bytype" class="tab-content active">
 	<ul>
-		<li><a href="#peerreviewed">Peer-reviewed articles</a></li>
-		<li><a href="#presentations">Conference presentations</a></li>
+		<li><a href="#peerreviewed"><?php print msg('pubs-peerreviewed') ?></a></li>
+		<li><a href="#presentations"><?php print msg('pubs-presentations') ?></a></li>
 		<li><a href="#books"><?php print msg('pubs-books') ?></a></li>
 		<li><a href="#theses"><?php print msg('pubs-theses') ?></a></li>
-		<li><a href="#roundtables">Roundtable and invited talks</a></li>
-		<li><a href="#digital-scholarship">Digital Scholarship</a></li>
-		<li><a href="#other-pubs">Other published contributions (invited, honorary, etc.)</a></li>
+		<li><a href="#roundtables"><?php print msg('pubs-roundtables') ?></a></li>
+		<li><a href="#digital-scholarship"><?php print msg('pubs-digitalscholarship') ?></a></li>
+		<li><a href="#other-pubs"><?php print msg('pubs-other') ?></a></li>
 	</ul>
 
 	<div class="pubsection">
-		<h3 id="peerreviewed">Peer-reviewed articles</h3>
+		<h3 id="peerreviewed"><?php print msg('pubs-peerreviewed') ?></h3>
 		{% set ns = namespace(last_year = 9999) %}
 		{# {% for year in range(1999, 2025)|reverse %} #}
 				{% for entry in db|keeponly(['peerreviewed', 'proceedings'], field='pubtype')|sort(reverse=true, attribute='year') %}
@@ -91,7 +91,7 @@ window.addEventListener(\"DOMContentLoaded\", () => {
 	</div>
 
 	<div class="pubsection">
-		<h3 id="presentations">Conference presentations</h3>
+		<h3 id="presentations"><?php print msg('pubs-presentations') ?></h3>
 		{% set ns = namespace(last_year = 9999) %}
 		{# {% for year in range(1999, 2025)|reverse %} #}
 				{% for entry in db|keeponly('presentation', field='pubtype')|sort(reverse=true, attribute='year') %}
@@ -146,7 +146,7 @@ window.addEventListener(\"DOMContentLoaded\", () => {
 	</div>
 
 	<div class="pubsection">
-		<h3 id="roundtables">Roundtable and invited talks</h3>
+		<h3 id="roundtables"><?php print msg('pubs-roundtables') ?></h3>
 		{% set ns = namespace(last_year = 9999) %}
 		{# {% for year in range(1999, 2025)|reverse %} #}
 				{% for entry in db|keeponly('invited', field='pubtype')|sort(reverse=true, attribute='year') %}
@@ -165,7 +165,7 @@ window.addEventListener(\"DOMContentLoaded\", () => {
 	</div>
 
 	<div class="pubsection">
-		<h3 id="digital-scholarship">Digital Scholarship</h3>
+		<h3 id="digital-scholarship"><?php print msg('pubs-digitalscholarship') ?></h3>
 		{% set ns = namespace(last_year = 9999) %}
 		{# {% for year in range(1999, 2025)|reverse %} #}
 				{% for entry in db|keeponly('digital scholarship', field='pubtype')|sort(reverse=true, attribute='year') %}
@@ -184,7 +184,7 @@ window.addEventListener(\"DOMContentLoaded\", () => {
 	</div>
 
 	<div class="pubsection">
-		<h3 id="other-pubs">Other published contributions (invited, honorary, etc.)</h3>
+		<h3 id="other-pubs"><?php print msg('pubs-other') ?></h3>
 		{% set ns = namespace(last_year = 9999) %}
 		{# {% for year in range(1999, 2025)|reverse %} #}
 				{% for entry in db|keeponly('other', field='pubtype')|sort(reverse=true, attribute='year') %}
