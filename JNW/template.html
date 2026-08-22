@@ -53,17 +53,19 @@ window.addEventListener(\"DOMContentLoaded\", () => {
 
 <title>Publications</title>
 
+  <p class="highlighted">If you're looking for unpublished term papers I wrote in grad school, see my <a href="research_old.html">old research page</a>.</p>
+
   <div class="tab-buttons">
-    <button class="tab-btn active" onclick="openTab(event, 'content-bytype')">By type</button>
-    <button class="tab-btn" onclick="openTab(event, 'content-byprogramme')">By research area</button>
+    <button class="tab-btn active" onclick="openTab(event, 'content-bytype')"><?php print msg('by-type'); ?></button>
+	 <button class="tab-btn" onclick="openTab(event, 'content-byprogramme')"><?php print msg('by-programme'); ?></button>
   </div>
 
   <div id="content-bytype" class="tab-content active">
 	<ul>
 		<li><a href="#peerreviewed">Peer-reviewed articles</a></li>
 		<li><a href="#presentations">Conference presentations</a></li>
-		<li><a href="#books">Books</a></li>
-		<li><a href="#theses">Theses</a></li>
+		<li><a href="#books"><?php print msg('pubs-books') ?></a></li>
+		<li><a href="#theses"><?php print msg('pubs-theses') ?></a></li>
 		<li><a href="#roundtables">Roundtable and invited talks</a></li>
 		<li><a href="#digital-scholarship">Digital Scholarship</a></li>
 		<li><a href="#other-pubs">Other published contributions (invited, honorary, etc.)</a></li>
@@ -108,7 +110,7 @@ window.addEventListener(\"DOMContentLoaded\", () => {
 	</div>
 
 	<div class="pubsection">
-		<h3 id="books">Books</h3>
+		<h3 id="books"><?php print msg('pubs-books') ?></h3>
 		{% set ns = namespace(last_year = 9999) %}
 				{% for entry in db|keeponly('book', field='pubtype')|sort(reverse=true, attribute='year') %}
 					{% if entry.year != ns.last_year %}
@@ -125,7 +127,7 @@ window.addEventListener(\"DOMContentLoaded\", () => {
 	</div>
 
 	<div class="pubsection">
-		<h3 id="theses">Theses</h3>
+		<h3 id="theses"><?php print msg('pubs-theses') ?></h3>
 		{% set ns = namespace(last_year = 9999) %}
 		{# {% for year in range(1999, 2025)|reverse %} #}
 				{% for entry in db|keeponly('thesis', field='pubtype')|sort(reverse=true, attribute='year') %}
@@ -218,7 +220,7 @@ set programme_list = [
 
 	<ul>
 {% for programme, full_programme in programme_list %}
-		<li><a href="#{{programme}}">{{full_programme}}</a></li>
+		<li><a href="#{{programme}}"><?php print msg('pubs-{{programme}}') ?></a></li>
 {% endfor %}
 	</ul>
 
