@@ -227,7 +227,7 @@ set programme_list = [
 {% for programme, full_programme in programme_list %}
 {% if db|keeponly(programme, field='programme') %}
 	<div class="pubsection">
-		<h3 id="{{programme}}">{{ full_programme }}</h3>
+		<h3 id="{{programme}}"><?php print msg('pubs-{{programme}}') ?></h3>
 		{% set ns = namespace(last_year = 9999) %}
 		{# {% for year in range(1999, 2025)|reverse %} #}
 				{% for entry in db|keeponly(programme, field='programme')|sort(reverse=true, attribute='year') %}
