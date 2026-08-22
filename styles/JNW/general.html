@@ -23,7 +23,7 @@
 			<div class="publication-journal">
 				<div class="pubimgcol"><img style="height: 1em;" src="./assets/journal.svg"/></div>
 				<div class="booktitle">
-					{{ booktitle }}
+					{{ booktitle|fix_dashes_JNW }}
 		{%- elif eventtitle is defined or venue is defined -%}
 		{%set nsg.first=false%}
 			<div class="publication-journal">
@@ -33,6 +33,9 @@
 		{%- else -%}
 			<div class="publication-journal">
 				<div>
+		{%- endif -%}
+		{%- if series is defined -%}
+			{% if booktitle is defined %}.{% endif %} <span class="{{ ENTRYTYPE }} volume">{{ series }}</span>
 		{%- endif -%}
 		{%- if volume is defined -%}
 			{% if not nsg.first %},{% else %}{%set nsg.first=false%}{% endif %} <span class="{{ ENTRYTYPE }} volume">{{ volume }}</span>
