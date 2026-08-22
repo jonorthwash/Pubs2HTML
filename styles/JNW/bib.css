@@ -64,11 +64,11 @@
 	/* padding-left: 30pt !important ;
 	text-indent: -30pt !important ; */
 
-	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: \"Open Sans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;
 	font-weight: bold ;
 	font-size: 12pt;
-	/* font-family: "DejaVu Serif" ; */
-	/* font-family: "Trebuchet MS" ; */
+	/* font-family: \"DejaVu Serif\" ; */
+	/* font-family: \"Trebuchet MS\" ; */
 }
 
 .publication div {

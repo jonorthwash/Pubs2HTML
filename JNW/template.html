@@ -44,34 +44,18 @@ window.addEventListener(\"DOMContentLoaded\", () => {
     }
   }
 });
-	</script>";
+	</script>
+	<style>{{ css }}</style>
+";
 
 	include("header.php");
 ?>
 
 <title>Publications</title>
 
-<style>{{ css }}</style>
-
-</head>
-
-<body>
-
-<!-- h1>BY TYPE</h1 -->
-
-<!-- h2>BOOKS</h2>
-
-  <ul id="pubs_list">
-
-  {# {% for entry in db|keeponly('book')|sort(attribute='author')|sort(attribute='year'|reverse) %}
-    {{ entry.formatted }}
-  {%- endfor %} #}
-
-  </ul -->
- 
   <div class="tab-buttons">
     <button class="tab-btn active" onclick="openTab(event, 'content-bytype')">By type</button>
-    <button class="tab-btn" onclick="openTab(event, 'content-byprogramme')">By programme</button>
+    <button class="tab-btn" onclick="openTab(event, 'content-byprogramme')">By research area</button>
   </div>
 
   <div id="content-bytype" class="tab-content active">
@@ -218,47 +202,6 @@ window.addEventListener(\"DOMContentLoaded\", () => {
   </div>
 
 
-<!-- h2>CONFERENCE PRESENTATIONS</h2>
-
-  <ul id="pubs_list">
-
-  {# {% for entry in db|keeponly('presentation', field='pubtype')|sort(attribute='year')|reverse|sort(attribute='author') %}
-    {{ entry.formatted }}
-  {%- endfor %} #}
-
-  </ul -->
-
-
-<!-- h2>TECHNICAL REPORTS</h2>
-
-  <ul id="pubs_list">
-
-  {# {% for entry in db|keeponly('techreport')|sort(attribute='author')|sort(attribute='year') %}
-    {{ entry.formatted }}
-  {%- endfor %} #}
-
-  </ul -->
-
-
-<!-- h1>BY YEAR</h1>
-
-{#{% for year in range(1999, 2025)|reverse %}
-{% if db|keeponly(year, field='year') %}#}
-<h2>{#{{ year }}#}</h2>
-
-  <ul id="pubs_list">
-
-{#    {% for entry in db|keeponly(year, field='year')|sort(attribute='author') %}
-      {{ entry.formatted }}
-	 {%- endfor %} #}
-
-  </ul>
-{# {% endif %}
-{% endfor %} #}
-
--->
-
-<!-- h1>BY PROGRAMME</h1 -->
 
 {%
 set programme_list = [
